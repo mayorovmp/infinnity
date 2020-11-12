@@ -2,4 +2,8 @@ spring:
   jobs:
     weather:
       cron: "*/5 * * ? * *"
+logging:
+  level:
+    ru.infinnity.weather: TRACE
+
 
