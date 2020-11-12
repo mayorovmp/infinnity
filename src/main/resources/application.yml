@@ -1,0 +1,5 @@
+spring:
+  jobs:
+    weather:
+      cron: "*/5 * * ? * *"
+
