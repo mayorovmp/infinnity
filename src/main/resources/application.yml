@@ -2,6 +2,21 @@ spring:
   jobs:
     weather:
       cron: "*/5 * * ? * *"
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:weatherdb
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+
 logging:
   level:
     ru.infinnity.weather: TRACE
