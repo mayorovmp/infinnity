@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.infinnity.weather.entity.City;
 import ru.infinnity.weather.entity.Weather;
+import ru.infinnity.weather.exception.CityNotFoundException;
 import ru.infinnity.weather.repository.WeatherRepository;
 import ru.infinnity.weather.service.CityService;
 import ru.infinnity.weather.service.WeatherService;
@@ -40,7 +41,8 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     @Transactional(readOnly = true)
     public List<Weather> getWeather(String cityName, ZonedDateTime date) {
-        City city = cityService.findByName(cityName).orElseThrow(() -> new EntityNotFoundException("Город не найден"));
+        City city = cityService.findByName(cityName)
+                .orElseThrow(() -> new CityNotFoundException("Не найден город " + cityName));
         ZonedDateTime dateStart = date.truncatedTo(ChronoUnit.DAYS);
         ZonedDateTime dateEnd = dateStart.plusDays(1);
         return weatherRepository.getWeather(city, dateStart, dateEnd);
