@@ -20,4 +20,11 @@ public interface WeatherService {
      * @return показания погоды
      */
     List<Weather> getWeather(String cityName, ZonedDateTime date);
+
+    /**
+     * Температура сейчас
+     * @param cityName город
+     * @return показание погоды
+     */
+    Weather getWeather(String cityName);
 }

@@ -13,6 +13,7 @@ import ru.infinnity.weather.service.WeatherService;
 
 import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.Collections;
 
 @Log4j2
 @RestController
@@ -22,11 +23,18 @@ public class WeatherController {
     private final WeatherService weatherService;
     private final Mapper mapper;
 
-    @GetMapping(value = "/{cityName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<WeatherDto>> get(
-            @PathVariable("cityName") final String cityName,
-            @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime date) {
-        Collection<Weather> results = weatherService.getWeather(cityName, date);
+            @RequestParam("city") final String cityName,
+            @RequestParam(value = "date", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime date) {
+        Collection<Weather> results = null;
+        if (date == null) {
+            results = Collections.singleton(weatherService.getWeather(cityName));
+        } else {
+            results = weatherService.getWeather(cityName, date);
+
+        }
         return ResponseEntity.ok(mapper.mapList(results, WeatherDto.class));
     }
 }
