@@ -1,6 +1,5 @@
 package ru.infinnity.weather.service;
 
-import ru.infinnity.weather.entity.City;
 import ru.infinnity.weather.entity.Weather;
 
 import java.time.ZonedDateTime;
