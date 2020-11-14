@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.infinnity.weather.entity.City;
 import ru.infinnity.weather.entity.Weather;
 import ru.infinnity.weather.exception.CityNotFoundException;
+import ru.infinnity.weather.exception.WeatherNotFoundException;
+import ru.infinnity.weather.repository.Range;
 import ru.infinnity.weather.repository.WeatherRepository;
 import ru.infinnity.weather.service.CityService;
 import ru.infinnity.weather.service.WeatherService;
@@ -47,4 +49,16 @@ public class WeatherServiceImpl implements WeatherService {
         ZonedDateTime dateEnd = dateStart.plusDays(1);
         return weatherRepository.getWeather(city, dateStart, dateEnd);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Weather getWeather(String cityName) {
+        City city = cityService.findByName(cityName)
+                .orElseThrow(() -> new CityNotFoundException("Не найден город " + cityName));
+        return weatherRepository
+                .getWeather(city, Range.of(0, 1))
+                .get().findFirst()
+                .orElseThrow(() -> new WeatherNotFoundException("Не найдена погода для города " + cityName));
+    }
+
 }
