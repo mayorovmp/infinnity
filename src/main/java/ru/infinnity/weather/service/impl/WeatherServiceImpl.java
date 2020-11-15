@@ -13,7 +13,6 @@ import ru.infinnity.weather.repository.WeatherRepository;
 import ru.infinnity.weather.service.CityService;
 import ru.infinnity.weather.service.WeatherService;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
