@@ -21,4 +21,12 @@ logging:
   level:
     ru.infinnity.weather: TRACE
 
-cities: Russia/chel, Russia/ekt
+dict:
+  cities:
+    - chelyabinsk, RU
+    - chelyabinsk, RU1
+
+openweather:
+  url: https://api.openweathermap.org/data/2.5/find?q={q}&appid={key}
+  key: 0773e9dcf86b6ecf631c8be20a13d491
+

@@ -1,6 +1,5 @@
 package ru.infinnity.weather.config;
 
-import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
