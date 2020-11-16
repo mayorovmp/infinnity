@@ -30,7 +30,7 @@ logging:
 dict:
   cities:
     - chelyabinsk, RU
-    - chelyabinsk, RU1
+    - moscow, RU
 
 openweather:
   url: https://api.openweathermap.org/data/2.5/find?q={q}&appid={key}
