@@ -1,0 +1,41 @@
+spring:
+  jobs:
+    weather:
+      cron: "*/5 * * ? * *"
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:weatherdb
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+  h2:
+    console:
+      enabled: true
+
+server:
+  port: 8081
+
+logging:
+  level:
+    ru.infinnity.weather: TRACE
+
+dict:
+  cities:
+    - chelyabinsk, RU
+    - chelyabinsk, RU1
+
+openweather:
+  url: https://api.openweathermap.org/data/2.5/find?q={q}&appid={key}
+  key: 0773e9dcf86b6ecf631c8be20a13d491
+
+myweather:
+  url: http://localhost:8080/ws/weather
+
