@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.infinnity.weather.exception.WeatherNotFoundException;
 import ru.infinnity.weather.model.openweather.OpenWeatherResponse;
-import ru.infinnity.weather.integration.OpenweatherService;
+import ru.infinnity.weather.integration.IntegrationWeatherService;
 
 import static ru.infinnity.weather.utils.TemperatureUtil.kelvinToCelsius;
 
 
 @Service
 @RequiredArgsConstructor
-public class OpenweatherServiceImpl implements OpenweatherService {
+public class OpenweatherServiceImpl implements IntegrationWeatherService {
     @Value("${openweather.key}")
     private String APP_KEY;
     @Value("${openweather.url}")

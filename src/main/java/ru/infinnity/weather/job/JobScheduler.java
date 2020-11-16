@@ -8,8 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.infinnity.weather.config.CityConfig;
 import ru.infinnity.weather.entity.Weather;
-import ru.infinnity.weather.integration.MyWeatherService;
-import ru.infinnity.weather.integration.OpenweatherService;
+import ru.infinnity.weather.integration.IntegrationWeatherService;
 import ru.infinnity.weather.service.WeatherService;
 
 import java.util.List;
@@ -22,18 +21,19 @@ import java.util.List;
 public class JobScheduler {
 
     private final CityConfig cityConfig;
-    private final OpenweatherService openweatherService;
+    private final List<IntegrationWeatherService> integrationWeatherServices;
     private final WeatherService weatherService;
-    private final MyWeatherService myWeatherService;
 
     @Description("Синхронизация с сервисами погоды")
     @Scheduled(cron = "${spring.jobs.weather.cron}")
     public void weatherSync() {
         for (String name : cityConfig.getCities()) {
-            double temp1 = openweatherService.getTemperature(name);
-            double temp2 = myWeatherService.getTemperature(name);
-            Weather ww = weatherService.save(name, temp1);
-            List<Weather> weathers = weatherService.getWeather(name, ww.getTimestamp());
+            double sumOfTemperature = 0;
+            for (IntegrationWeatherService integrationService: integrationWeatherServices) {
+                sumOfTemperature += integrationService.getTemperature(name);
+            }
+            Weather weather = weatherService.save(name, sumOfTemperature / integrationWeatherServices.size());
+            List<Weather> weathers = weatherService.getWeather(name, weather.getTimestamp());
             log.debug(weathers);
         }
     }

@@ -1,6 +1,6 @@
 package ru.infinnity.weather.integration;
 
-public interface OpenweatherService {
+public interface IntegrationWeatherService {
 
     /**
      * Температура сейчас
